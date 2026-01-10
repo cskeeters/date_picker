@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"time"
@@ -8,6 +9,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/ethanefung/bubble-datepicker"
+	"github.com/jehiah/go-strftime"
 )
 
 type model struct {
@@ -60,24 +62,29 @@ func (m model) View() string {
 }
 
 func main() {
+	var format string
+	flag.StringVar(&format, "f", "%Y-%m-%d", "Output date format (POSIX strftime format)")
+	flag.Parse()
+
 	date := time.Now()
 
 	lipgloss.SetDefaultRenderer(lipgloss.NewRenderer(os.Stderr))
 
-	if len(os.Args) > 1 {
-		// input := "20260103T150856Z"
-		d, err := time.Parse("2006-01-02", "2025-12-24") // os.Args[1])
-		if err == nil {
-			fmt.Printf("yes date\n")
-			date = d
-		}
+	// Check for date argument after flag parsing
+	args := flag.Args()
+	if len(args) > 0 {
+		input := args[0]
 
-		d, err = time.Parse("20060102T150405Z", os.Args[1])
-		if err == nil {
-			fmt.Printf("yes datetime\n")
+		// Try parsing as YYYY-MM-DD format
+		if d, err := time.Parse("2006-01-02", input); err == nil {
 			date = d
+		} else if d, err := time.Parse("20060102T150405Z", input); err == nil {
+			// Try parsing as ISO datetime format
+			date = d
+		} else {
+			fmt.Fprintf(os.Stderr, "Error: Invalid date format: %s\n", input)
+			os.Exit(1)
 		}
-
 	}
 	tty, err := os.OpenFile("/dev/tty", os.O_WRONLY, 0)
 	if err != nil {
@@ -95,7 +102,7 @@ func main() {
 
 	if finalModel, ok := teaModel.(model); ok {
 		if finalModel.selected {
-			fmt.Printf("%s\n", finalModel.datepicker.Time.Format("2006-01-02"))
+			fmt.Printf("%s\n", strftime.Format(format, finalModel.datepicker.Time))
 		} else {
 			os.Exit(1)
 		}
