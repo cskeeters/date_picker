@@ -9,6 +9,12 @@ This document provides guidelines and commands for developing the date-picker CL
 - `go build -v` - Compile with verbose output
 - `go build -o date-picker-custom` - Compile with custom output name
 
+### Usage Examples
+- `./date-picker` - Interactive date picker starting with today's date
+- `./date-picker 2024-01-15` - Interactive date picker starting with the specified date
+- `./date-picker -f "%Y/%m/%d" 2024-01-15` - Interactive date picker with custom output format
+- `./date-picker -f "%A, %B %d, %Y"` - Interactive date picker with full date output format
+
 ### Clean Builds
 - `go clean` - Remove object files and cached files
 - `go clean -cache` - Remove the entire go build cache
