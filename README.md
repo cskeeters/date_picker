@@ -13,7 +13,7 @@ fi
 echo "User selected: $SELECTED_DATE"
 ```
 
-<img src="https://github.com/cskeeters/i/blob/master/date_picker.webp?raw=true" width="227">
+<img src="https://github.com/cskeeters/i/blob/master/date_picker.webp?raw=true" style="width: intrinsic; zoom: 0.5;">
 
 With the default date selected, SELECTED_DATE will be set to `2026-Feb-28`.
 
