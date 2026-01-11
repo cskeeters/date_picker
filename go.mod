@@ -1,4 +1,4 @@
-module date-picker
+module date_picker
 
 go 1.25.5
 
