@@ -5,7 +5,7 @@ go 1.25.5
 require (
 	github.com/charmbracelet/bubbletea v1.3.10
 	github.com/charmbracelet/lipgloss v1.1.0
-	github.com/ethanefung/bubble-datepicker v0.1.0
+	github.com/cskeeters/bubble-datepicker v0.1.3
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869
 )
 
@@ -29,5 +29,3 @@ require (
 	golang.org/x/sys v0.36.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 )
-
-replace github.com/ethanefung/bubble-datepicker => github.com/cskeeters/bubble-datepicker v0.1.1
