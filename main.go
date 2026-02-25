@@ -10,6 +10,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/cskeeters/bubble-datepicker"
 	"github.com/jehiah/go-strftime"
+	"github.com/muesli/termenv"
 )
 
 type model struct {
@@ -68,8 +69,6 @@ func main() {
 
 	date := time.Now()
 
-	lipgloss.SetDefaultRenderer(lipgloss.NewRenderer(os.Stderr))
-
 	// Check for date argument after flag parsing
 	args := flag.Args()
 	if len(args) > 0 {
@@ -92,6 +91,12 @@ func main() {
 		tty = os.Stderr
 	}
 	defer tty.Close()
+
+	r := lipgloss.NewRenderer(tty, termenv.WithTTY(true))
+	// lipgloss.SetColorProfile(termenv.ANSI)
+	// lipgloss.SetColorProfile(termenv.TrueColor)
+	lipgloss.SetDefaultRenderer(r)
+
 
 	p := tea.NewProgram(initialModel(date), tea.WithOutput(tty), tea.WithAltScreen())
 	teaModel, err := p.Run()
