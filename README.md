@@ -17,6 +17,13 @@ echo "User selected: $SELECTED_DATE"
 
 With the default date selected, SELECTED_DATE will be set to `2026-Feb-28`.
 
+# Installation
+
+```sh
+git clone git@github.com:cskeeters/date_picker.git
+make build
+sudo make install
+```
 
 # Features
 
